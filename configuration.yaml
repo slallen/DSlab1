@@ -11,8 +11,8 @@ configuration :
       ip : 10.0.0.22
       port : 12998
     - name : logger
-      ip : 192.168.43.45
-      port : 1987
+      ip : 128.237.219.71
+      port : 1988
     
 sendRules : 
     - action : drop

@@ -15,30 +15,36 @@ import java.util.Map;
 public class VectorTimeStamp extends TimeStamp{
 	private int local_time;
 	private HashMap<String, Integer> local_map = new HashMap<String, Integer>(); //String = dest_name, int = that node's timestamp
-	private int size;
+	private int clock_size = 3;
+	private String[] mapKeys = new String[]{"alice", "bob", "charlie"};
 	
 	public VectorTimeStamp() {
 		super();
 		this.local_time = 0;
+		for (String key : mapKeys) //currently hard-coded, TODO: host_list List
+        {
+            this.local_map.put(key, local_time);
+        }
 	}
 	
 	public VectorTimeStamp(VectorTimeStamp t, int size){
 		super();
-		this.local_time = t.get_localtime();
+		this.local_time++;
+		for (String key : mapKeys) //currently hard-coded, TODO: host_list List
+        {
+            this.local_map.put(key, local_time);
+        }
 	}
 
 	public void set_localtime(TimeStamp t) {		
-		this.local_time ++;
+		//this.local_time ++;
 		
 		if(t == null) return;
 		else {
-		    local_map.put("A", 1);
-		    local_map.put("B", 2);
-		    local_map.put("C", 3);
 			return;
 		}
 		
-		/*
+		/* TODO: old code, must update
 		if(t == null) return;
 		else {
 			VectorTimeStamp temp = (VectorTimeStamp)t;
@@ -57,7 +63,8 @@ public class VectorTimeStamp extends TimeStamp{
 	        System.out.print(" " + key + "-" + local_map.get(key) + "; ");
 	    }
 	    System.out.print(")\t");
-	    /*
+	    
+	    /* another way to print HashMap...irrelevant
 	    for (Map.Entry<String, Integer> entry : local_map.entrySet()) {
 	        String key = entry.getKey().toString();;
 	        Integer value = entry.getValue();
@@ -70,6 +77,7 @@ public class VectorTimeStamp extends TimeStamp{
 		return this.local_time;
 	}
 
+	/* TODO: old code, must update */
 	public int compare(TimeStamp t) {
 		VectorTimeStamp temp = (VectorTimeStamp)t;
 		int other_time = temp.get_localtime();

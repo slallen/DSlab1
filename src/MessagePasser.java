@@ -56,13 +56,13 @@ public class MessagePasser {
 		vector_clock = new VectorClockService();
 		
 		/* establish connection to logger*/
-		/*
+		
 		if( local_name.compareToIgnoreCase(logger) != 0 ){
 			InetAddress dst_ip = InetAddress.getByName(hosts.get(logger).get_ip());
 			int dst_port = Integer.parseInt(hosts.get(logger).get_port());
 			logger_socket = new Socket(dst_ip,dst_port);
 		}
-		*/
+		
 		
 		/* start one thread to listen */
 		server_port = Integer.parseInt(hosts.get(local_name).get_port());
@@ -101,8 +101,8 @@ public class MessagePasser {
 		if(result == 0){
 			// send the message
 			ObjectOutputStream out = new ObjectOutputStream(fd.getOutputStream());
-//			ObjectOutputStream logger_out = new ObjectOutputStream(logger_socket.getOutputStream());
-//			logger_out.writeObject(message);
+			ObjectOutputStream logger_out = new ObjectOutputStream(logger_socket.getOutputStream());
+			logger_out.writeObject(message);
 			out.writeObject(message);
 
 			System.out.println("[SEND direct]	"+message.get_dest()+":"+message.get_data().toString());
@@ -262,7 +262,7 @@ public class MessagePasser {
 	}
 	
 	public int set_clockType(String type) {
-		if(type.equalsIgnoreCase("logical")) clock_type = 1;
+		if(type.equalsIgnoreCase("logic")) clock_type = 1;
 		else if(type.equalsIgnoreCase("vector")) clock_type = 2;
 		else System.out.println("Invalid clock type");
 		return clock_type;
