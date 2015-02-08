@@ -14,18 +14,17 @@ import java.util.Map.Entry;
 
 
 public class VectorTimeStamp extends TimeStamp{
-	private int local_time;
+	private int local_time = 0;
 	private HashMap<String, Integer> local_map = new HashMap<String, Integer>(); //String = dest_name, int = that node's timestamp
-	private int clock_size = 3;
-	private String[] mapKeys = new String[]{"alice", "bob", "charlie"};
 	private	int random = 0;
 
 	public VectorTimeStamp() {
 		super();
-		this.local_time = 0;
-		for (String key : mapKeys) //currently hard-coded, TODO: host_list List
-        {
-            this.local_map.put(key, local_time);
+		//this.local_time = 0;
+		for (Entry<String, Host> entry : MessagePasser.hosts.entrySet()) {
+            if (!entry.getKey().equalsIgnoreCase("logger")) {
+            	this.local_map.put(entry.getKey(), local_time);
+            }
         }
 	}
 	
@@ -34,17 +33,28 @@ public class VectorTimeStamp extends TimeStamp{
 		this.local_map = t.get_localtime();
 	}
 
-	public void set_localtime(TimeStamp t) {		
+	public void set_localtime(TimeStamp t) {	
 		this.local_time++;
-		if(t == null) return;
+		
+		if(t == null) {
+			local_map.put(MessagePasser.local_name, local_time);
+			return;
+		}
 		else {
 			VectorTimeStamp temp = (VectorTimeStamp)t;
 			HashMap<String, Integer> other_time = temp.get_localtime();
 			
+			/* TODO: delete after testing */
+//			for (Entry<String, Integer> entry : other_time.entrySet()) {
+//	            this.local_map.put(entry.getKey(), local_time);
+//	        }
+            if (!MessagePasser.local_name.equalsIgnoreCase("logger"))
+            	local_map.put(MessagePasser.local_name, local_time);
+			
 	        for (Entry<String, Integer> entry : other_time.entrySet()) {
-	        	if (entry.getValue() > local_map.get(entry.getKey()))
-	        		local_map.put(entry.getKey(), entry.getValue() + 1);
-	        	
+            	if (entry.getValue() + 1 > local_map.get(entry.getKey()))
+	        		local_map.put(entry.getKey(), entry.getValue());
+	        
             	/*
 	        	if (entry.getKey().equalsIgnoreCase("alice")) {
 	            	int other_value = entry.getValue();
@@ -54,21 +64,8 @@ public class VectorTimeStamp extends TimeStamp{
 	            */
 	        }
 			return;
-			//if(local_time <= other_time) return 0;
-			//else return 1;
 		}
 		
-		/* TODO: old code, must update
-		if(t == null) return;
-		else {
-			VectorTimeStamp temp = (VectorTimeStamp)t;
-			int other_time = temp.get_localtime();
-			local_time = (other_time + 1) > local_time ? (other_time + 1) : local_time;
-			return;
-		}
-		*/
-		
-
 	}
 	
 	public void print_clock(){

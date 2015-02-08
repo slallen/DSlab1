@@ -17,12 +17,12 @@ import org.yaml.snakeyaml.Yaml;
 
 public class MessagePasser {
 	private String configuration_file;
-	private String local_name;
+	public static String local_name;
 	private static ArrayList<Rule> send_rules;
 	private static ArrayList<Rule> recv_rules;
 	private static Queue<TimeStampedMessage> send_queue = new LinkedList<TimeStampedMessage>();
 	private HashMap<String, Socket> connections = new HashMap<String,Socket>(); // stores <dest_name, socket>
-	private HashMap<String, Host> hosts = new HashMap<String,Host>();// stores <dest_name, host>
+	public static HashMap<String, Host> hosts = new HashMap<String,Host>();// stores <dest_name, host>
 //	private int server_port = 12345; // this value is randomly chosen
 	private int server_port;
 	private static String logger = "logger";

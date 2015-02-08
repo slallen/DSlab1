@@ -3,13 +3,19 @@
 configuration : 
     - name : alice
       ip : 128.237.219.71
-      port : 12348
+      port : 12345
     - name : bob
-      ip : 10.0.0.22
-      port : 14255
+      ip : 128.237.219.71
+      port : 12346
     - name : charlie
-      ip : 10.0.0.22
-      port : 12998
+      ip : 128.237.219.71
+      port : 12347
+    - name : daphnie
+      ip : 128.237.219.71
+      port : 12348
+    - name : ed
+      ip : 128.237.219.71
+      port : 12349
     - name : logger
       ip : 128.237.219.71
       port : 1988
