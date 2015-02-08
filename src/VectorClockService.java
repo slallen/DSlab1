@@ -16,10 +16,10 @@ public class VectorClockService extends ClockService{
 	 * 	there are 2 circumstances
 	 * 	if sending a message 
 	 * 		call UpdateTimeStamp(null)
-	 * 		-just add 1 to logic clock
+	 * 		-just add 1 to own clock in vector
 	 *	if receive a message
 	 *		should call UpdateTimeStamp(TimeStamp t)
-	 *		-modify the logic clock to max(t,current+1) 
+	 *		-modify the all clock items in vector to max(t,current+1) 
 	 * */
 	public void UpdateTimeStamp(TimeStamp t) {
 		clock.set_localtime(t);

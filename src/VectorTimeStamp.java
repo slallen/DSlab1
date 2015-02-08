@@ -29,28 +29,29 @@ public class VectorTimeStamp extends TimeStamp{
         }
 	}
 	
-	public VectorTimeStamp(VectorTimeStamp t, int size){
+	public VectorTimeStamp(VectorTimeStamp t){
 		super();
-		this.local_time++;
-		for (String key : mapKeys) //currently hard-coded, TODO: host_list List
-        {
-            this.local_map.put(key, local_time);
-        }
+		this.local_map = t.get_localtime();
 	}
 
 	public void set_localtime(TimeStamp t) {		
-		//this.local_time ++;
+		this.local_time++;
 		if(t == null) return;
 		else {
 			VectorTimeStamp temp = (VectorTimeStamp)t;
-			HashMap<String, Integer> other_time = temp.get_localmap();
+			HashMap<String, Integer> other_time = temp.get_localtime();
 			
 	        for (Entry<String, Integer> entry : other_time.entrySet()) {
-	            if (entry.getKey().equalsIgnoreCase("alice")) {
-	                int other_value = entry.getValue();
+	        	if (entry.getValue() > local_map.get(entry.getKey()))
+	        		local_map.put(entry.getKey(), entry.getValue() + 1);
+	        	
+            	/*
+	        	if (entry.getKey().equalsIgnoreCase("alice")) {
+	            	int other_value = entry.getValue();
 	                random++;
 	                local_map.put("bob", random);
 	            }
+	            */
 	        }
 			return;
 			//if(local_time <= other_time) return 0;
@@ -77,27 +78,16 @@ public class VectorTimeStamp extends TimeStamp{
 	    }
 	    System.out.print(")\t");
 	    
-	    /* another way to print HashMap...irrelevant
-	    for (Map.Entry<String, Integer> entry : local_map.entrySet()) {
-	        String key = entry.getKey().toString();;
-	        Integer value = entry.getValue();
-	        System.out.print("key, " + key + " value " + value );
-	    }
-	    */
 	}
 	
-	public HashMap<String, Integer> get_localmap() {
+	public HashMap<String, Integer> get_localtime() {
 		return this.local_map;
 	}
 
-	/* TODO: old code, must update */
+	/* TODO: old code, must update... UPDATE: when is this used? */
 	public int compare(TimeStamp t) {
-		VectorTimeStamp temp = (VectorTimeStamp)t;
-		HashMap<String, Integer> other_time = temp.get_localmap();
-		
-		return 1;
-		//if(local_time <= other_time) return 0;
-		//else return 1;
+		//insert code
+		return 0;
 	}
 
 }

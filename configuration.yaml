@@ -2,7 +2,7 @@
 ---
 configuration : 
     - name : alice
-      ip : 192.168.0.11
+      ip : 128.237.219.71
       port : 12348
     - name : bob
       ip : 10.0.0.22
@@ -11,7 +11,7 @@ configuration :
       ip : 10.0.0.22
       port : 12998
     - name : logger
-      ip : 192.168.0.11
+      ip : 128.237.219.71
       port : 1988
     
 sendRules : 

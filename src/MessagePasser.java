@@ -49,20 +49,18 @@ public class MessagePasser {
 			return;
 		}
 	
-		/* choose logic or vector clock */
+		/* choose logic or vector clock...UPDATE: Not needed, user inputs clock choice */
 //		clock_type = 2; // here set clock_type to 2 to switch to vector clock
 
 		logic_clock = new LogicClockService();
 		vector_clock = new VectorClockService();
 		
 		/* establish connection to logger*/
-		
 		if( local_name.compareToIgnoreCase(logger) != 0 ){
 			InetAddress dst_ip = InetAddress.getByName(hosts.get(logger).get_ip());
 			int dst_port = Integer.parseInt(hosts.get(logger).get_port());
 			logger_socket = new Socket(dst_ip,dst_port);
 		}
-		
 		
 		/* start one thread to listen */
 		server_port = Integer.parseInt(hosts.get(local_name).get_port());
