@@ -1,11 +1,15 @@
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.URL;
 import java.net.UnknownHostException;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -177,7 +181,23 @@ public class MessagePasser {
 	}
 	private boolean parse_configuration(String file_name) throws FileNotFoundException{
 		//FileInputStream file = new FileInputStream(file_name);
-		FileInputStream file = new FileInputStream("C:/Users/sweet_000/workspace/DSlab1/configuration.yaml");
+		//String url="https://cmu.box.com/shared/static/u1o2vajlssqckucfrj1r12ys1p4j7e16.yaml";
+		
+		String url = file_name;
+		String new_file = "new_configuration.yaml";
+		
+		try {
+			URL download=new URL(url);
+			ReadableByteChannel rbc=Channels.newChannel(download.openStream());
+			FileOutputStream fileOut = new FileOutputStream(new_file);
+			fileOut.getChannel().transferFrom(rbc, 0, 1 << 24);
+			fileOut.flush();
+			fileOut.close();
+			rbc.close();
+		} catch(Exception e){ e.printStackTrace(); }		
+		
+		
+		FileInputStream file = new FileInputStream(new_file);
 		Yaml yaml =new Yaml();
 		Map<String, Object>  buffer = (Map<String, Object>) yaml.load(file);
 		List<Map<String, Object>> host_list  = (List<Map<String, Object>>) buffer.get("configuration");
